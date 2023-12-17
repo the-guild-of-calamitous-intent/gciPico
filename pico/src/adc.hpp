@@ -1,8 +1,10 @@
 
 #pragma once
 
-
+// #include "pico/stdlib.h"
+// #include "pico/binary_info.h"
 #include "hardware/adc.h"
+#include "hardware/gpio.h"
 
 constexpr uint A0         = 0;
 constexpr uint A1         = 1;
@@ -11,18 +13,12 @@ constexpr uint A3         = 3;
 constexpr float ADC_SCALE = 3.3f / (1 << 12);
 
 class ADC {
-  const uint pin;
-  static bool initialized;
-
 public:
-  ADC(const uint pin) : pin(pin) {}
+  ADC() { adc_init(); }
   ~ADC() {}
 
-  bool init() {
+  bool init(const uint pin) {
     if (pin <= 3) {
-      if (initialized == false) adc_init();
-      initialized = true;
-
       // Make sure GPIO is high-impedance, no pullups etc
       adc_gpio_init(pin + 26);
       return true;
@@ -30,12 +26,16 @@ public:
     return false;
   }
 
-  uint16_t read_raw() {
+  uint16_t read_raw(const uint pin) {
     adc_select_input(pin);
     return adc_read();
   }
 
-  inline float read(const float scale=ADC_SCALE) { return scale * read_raw(); }
+  inline float read(const uint pin) { return ADC_SCALE * read_raw(pin); }
 };
 
-bool ADC::initialized = false;
+// template<uint pin>
+// bool ADC<pin>::initialized = false;
+// bool ADC::initialized = false;
+
+// static ADC adc;

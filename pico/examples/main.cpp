@@ -10,6 +10,11 @@
 #include "uart.hpp"
 // #include "string.hpp"
 
+// #include <float.h>
+// #include "pico.h"
+// #include "pico/bootrom/sf_table.h"
+#include "pico/float.h"
+
 using namespace std;
 
 TwoWire Wire0;
@@ -32,6 +37,8 @@ int main() {
 
   gpio_init(LED_PIN);
   gpio_set_dir(LED_PIN, GPIO_OUT);
+
+  uint32_t a = float2fix(3.45,11);
 
   // ADC
   volts.init();
