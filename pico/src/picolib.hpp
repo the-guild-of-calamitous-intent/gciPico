@@ -1,7 +1,8 @@
-/*
-This will be a future library separate from quadcopter because there is
-nothing here that is specific to quadcopter.
-*/
+/**************************************\
+ * The MIT License (MIT)
+ * Copyright (c) 2023 Kevin Walchko
+ * see LICENSE for full details
+\**************************************/
 #pragma once
 
 #include <cstdint>
