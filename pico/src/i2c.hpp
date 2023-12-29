@@ -13,10 +13,13 @@ constexpr uint I2C1_SDA_PIN    = 14;
 constexpr uint I2C1_SCL_PIN    = 15;
 constexpr uint I2C_100KHZ      = 100 * 1000;
 constexpr uint I2C_400KHZ      = 400 * 1000;
-constexpr bool I2C_HOLD_BUS    = true;
-constexpr bool I2C_RELEASE_BUS = false;
 constexpr uint I2C_BUFFER_SIZE = 32;
 
+#ifndef I2C_BUS_DEFINES
+#define I2C_BUS_DEFINES
+constexpr bool I2C_HOLD_BUS    = true;
+constexpr bool I2C_RELEASE_BUS = false;
+#endif
 
 constexpr uint32_t sda_valid[2] = { // i2c0, i2c1
     (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) | (1 << 16) | (1 << 20) |
@@ -37,7 +40,7 @@ public:
   TwoWire() {}
   ~TwoWire() {}
 
-  bool init(uint baud, uint8_t port, uint pin_sda, uint pin_scl) {
+  bool init(uint baud, uint8_t port, uint32_t pin_sda, uint32_t pin_scl) {
     uint ret;
     if (port == 0) {
       i2c = &i2c0_inst;
