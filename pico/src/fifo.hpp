@@ -29,23 +29,27 @@ public:
     return (pos + 1) % BUFFER_SIZE;
   }
 
-  void clear() volatile { head = tail = numElem = 0; }
+  void clear() volatile {
+    head = 0;
+    tail = 0;
+    numElem = 0;
+  }
 
   void push(const uint8_t b) volatile {
     if (isFull()) {
       head = nextPos(head); // drop oldest
-      numElem--;
+      numElem = numElem - 1;
     }
     buffer[tail] = b;
     tail         = nextPos(tail);
-    numElem++;
+    numElem = numElem + 1;
   }
 
   uint8_t pop() volatile {
     if (isEmpty()) return 0;
     uint8_t ret = buffer[head];
     head        = nextPos(head);
-    numElem--;
+    numElem = numElem - 1;
     return ret;
   }
 };

@@ -8,10 +8,12 @@
 #include <cstdint>
 #include "pico/binary_info.h"
 #include "pico/stdlib.h"
+// #include "hardware/gpio.h" // already in other headers
 #include "tusb.h" // wait for USB
 
 typedef uint32_t pin_t;
 
+#include "i2c.hpp"
 #include "adc.hpp"
 #include "pwm.hpp"
 #include "fifo.hpp"
