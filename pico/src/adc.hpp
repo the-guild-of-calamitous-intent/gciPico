@@ -17,25 +17,28 @@ constexpr uint A3         = 3;
 constexpr float ADC_SCALE = 3.3f / (1 << 12);
 
 class ADC {
+  uint32_t pin{0};
+
 public:
   ADC() { adc_init(); }
   ~ADC() {}
 
-  bool init(const uint pin) {
+  bool init(const uint32_t pin) {
     if (pin <= 3) {
       // Make sure GPIO is high-impedance, no pullups etc
       adc_gpio_init(pin + 26);
+      this->pin = pin;
       return true;
     }
     return false;
   }
 
-  uint16_t read_raw(const uint pin) {
+  uint16_t read_raw(void) {
     adc_select_input(pin);
     return adc_read();
   }
 
-  inline float read(const uint pin) { return ADC_SCALE * read_raw(pin); }
+  inline float read(void) { return ADC_SCALE * read_raw(); }
 };
 
 // template<uint pin>

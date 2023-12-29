@@ -2,6 +2,17 @@
 
 **In development**
 
+## WiFi Secrets
+
+`.gitignore` won't save `secrets.cmake` to protect your AP password. So
+create this in the examples folder with the correct SSID and password
+for your AP.
+
+```cmake
+set(WIFI_SSID "ssid_name" CACHE INTERNAL "secret")
+set(WIFI_PASSWORD "password" CACHE INTERNAL "secret")
+```
+
 # MIT License
 
 **Copyright (c) 2023 The Guild of Calamitous Intent**

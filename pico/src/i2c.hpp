@@ -17,6 +17,16 @@ constexpr bool I2C_HOLD_BUS    = true;
 constexpr bool I2C_RELEASE_BUS = false;
 constexpr uint I2C_BUFFER_SIZE = 32;
 
+
+constexpr uint32_t sda_valid[2] = { // i2c0, i2c1
+    (1 << 0) | (1 << 4) | (1 << 8) | (1 << 12) | (1 << 16) | (1 << 20) |
+        (1 << 24) | (1 << 28),
+    (1 << 2) | (1 << 6) | (1 << 10) | (1 << 14) | (1 << 18) | (1 << 22) |
+        (1 << 26)};
+constexpr uint32_t scl_valid[2] = { // i2c0, i2c1
+  (1 << 1) | (1 << 5) | (1 << 9) | (1 << 13) | (1 << 17) | (1 << 21) | (1 << 25) | (1 << 29),
+  (1 << 3) | (1 << 7) | (1 << 11) | (1 << 15) | (1 << 19) | (1 << 23) | (1 << 27)};
+
 class TwoWire {
   i2c_inst_t *i2c;
   uint8_t buffer[I2C_BUFFER_SIZE];
@@ -41,8 +51,8 @@ public:
     }
     else return false;
 
-    printf(">> i2c instance: %u buad: %u\n", port, ret);
-    printf(">> i2c SDA: %u SCL: %u\n", pin_sda, pin_scl);
+    // printf(">> i2c instance: %u buad: %u\n", port, ret);
+    // printf(">> i2c SDA: %u SCL: %u\n", pin_sda, pin_scl);
 
     i2c_init(i2c, baud);
     gpio_set_function(pin_sda, GPIO_FUNC_I2C);

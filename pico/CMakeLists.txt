@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
 set(PROJECT gcipico)
-string(TOLOWER "pico" PICO_BOARD) # pico or pico_w
+string(TOLOWER "pico_w" PICO_BOARD) # pico or pico_w
 set(PICO_SDK_PATH "$ENV{HOME}/github/pico-sdk")
 set(ENV{PATH} "$ENV{HOME}/github/gcc-arm/bin:$ENV{PATH}")
 set(PICO_SDK_PATH "${PICO_SDK_PATH}" CACHE PATH "Path to the PICO SDK")
@@ -65,6 +65,9 @@ LIST(APPEND pico_libs
     pico_stdlib
     hardware_adc
     hardware_i2c
+    hardware_pwm
+    hardware_spi
+    hardware_rtc
     hardware_uart)
 
 add_library(${PROJECT_NAME} INTERFACE)
