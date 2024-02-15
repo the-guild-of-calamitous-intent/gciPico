@@ -5,10 +5,23 @@
 \**************************************/
 #pragma once
 
+#include <cstring>
+#include <cstdlib>
+#include <cstdint>
+
+#include "pico/stdlib.h"
+#include "pico/cyw43_arch.h"
+
+#include "lwip/pbuf.h"
+#include "lwip/udp.h"
+
 class UDP {
   public:
   UDP() {}
-  ~UDP() {}
+  ~UDP() {
+    udp_remove(udp_pcb);
+    cyw43_arch_deinit();
+  }
 
   bool init() {
 
@@ -39,6 +52,7 @@ class UDP {
   }
 
   uint32_t send(uint8_* data, const uint32_t size) {
+    cyw43_arch_lwip_begin();
     struct pbuf *p = pbuf_alloc(PBUF_TRANSPORT, size+1, PBUF_RAM);
     // char *req = (char *)p->payload;
     // memset(req, 0, BEACON_MSG_LEN_MAX+1);
@@ -46,6 +60,7 @@ class UDP {
     memset(p->payload, data, size);
     err_t er = udp_sendto(pcb, p, &addr, UDP_PORT);
     pbuf_free(p);
+    cyw43_arch_lwip_end();
 
     if (er != ERR_OK) return 0;
     return size;
