@@ -2,6 +2,8 @@
 
 **In development**
 
+- [ ] Investigate Fixed Point Math (cpp/dev)
+
 ## WiFi Secrets
 
 `.gitignore` won't save `secrets.cmake` to protect your AP password. So
