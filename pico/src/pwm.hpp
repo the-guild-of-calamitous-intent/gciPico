@@ -6,9 +6,9 @@
 #pragma once
 
 #include "hardware/clocks.h"
+#include "hardware/gpio.h"
 #include "hardware/pwm.h"
 #include "pico/stdlib.h"
-#include "hardware/gpio.h"
 
 constexpr uint16_t SERVO_MAX_PULSE_WIDTH = 2000UL;
 constexpr uint16_t SERVO_MIN_PULSE_WIDTH = 1000UL;
@@ -47,8 +47,8 @@ public:
     slice_num = pwm_gpio_to_slice_num(pwm_pin);
     // channel   = pwm_gpio_to_channel(pwm_pin);
 
-    max_us = uint16_t((max_pwm_us - min_pwm_us) / 20E3 * wrap);
-    min_us = uint16_t(min_pwm_us / 20E3 * wrap);
+    max_us            = uint16_t((max_pwm_us - min_pwm_us) / 20E3 * wrap);
+    min_us            = uint16_t(min_pwm_us / 20E3 * wrap);
 
     pwm_config config = pwm_get_default_config();
     pwm_config_set_clkdiv_int(&config, clkDiv);
@@ -59,19 +59,23 @@ public:
   void write_us(uint16_t pulse_width_us) {
     if (pulse_width_us > max_us) pulse_width_us = max_us;
     // pwm_set_chan_level(slice_num, channel, pulse_width_us);
-    pwm_set_gpio_level(pin, pulse_width_us + min_us); // helper, might be better to get slice/channel
+    pwm_set_gpio_level(
+        pin, pulse_width_us +
+                 min_us); // helper, might be better to get slice/channel
   }
 
   void write(float percent) {
     if (percent > 100.0f) percent = 100.0f;
     if (percent < 0.0f) percent = 0.0f;
 
-    pwm_set_gpio_level(pin, percent*max_us + min_us); // helper, might be better to get slice/channel
+    pwm_set_gpio_level(
+        pin, percent * max_us +
+                 min_us); // helper, might be better to get slice/channel
     // pwm_set_chan_level(slice_num, channel, percent*max_us + min_us);
   }
 };
 
-using ESC = Servo; // just an alias ... want to do better esc stuff later
+// using ESC = Servo; // just an alias ... want to do better esc stuff later
 
 // class ESC: public Servo {
 //   public:

@@ -49,20 +49,20 @@ M,,*IRQ enabled: 0   read: 4
 */
 #pragma once
 #include "fifo.hpp"
+#include "hardware/gpio.h"
 #include "hardware/irq.h"
 #include "hardware/uart.h"
-#include "hardware/gpio.h"
 #include <cstdint>
 
-constexpr uint UART0_TX_PIN     = 0;
-constexpr uint UART0_RX_PIN     = 1;
-constexpr uint UART1_TX_PIN     = 8;
-constexpr uint UART1_RX_PIN     = 9;
+constexpr uint UART0_TX_PIN    = 0;
+constexpr uint UART0_RX_PIN    = 1;
+constexpr uint UART1_TX_PIN    = 8;
+constexpr uint UART1_RX_PIN    = 9;
 
-constexpr uint32_t tx_valid[2]  = { // uart0, uart1
+constexpr uint32_t tx_valid[2] = { // uart0, uart1
     (1 << 0) | (1 << 12) | (1 << 16) | (1 << 28),
     (1 << 4) | (1 << 8) | (1 << 20) | (1 << 24)};
-constexpr uint32_t rx_valid[2]  = { // uart0, uart1
+constexpr uint32_t rx_valid[2] = { // uart0, uart1
     (1 << 1) | (1 << 13) | (1 << 17) | (1 << 29),
     (1 << 5) | (1 << 9) | (1 << 21) | (1 << 25)};
 // constexpr uint32_t sda_valid[2] = { // i2c0, i2c1
@@ -71,8 +71,9 @@ constexpr uint32_t rx_valid[2]  = { // uart0, uart1
 //     (1 << 2) | (1 << 6) | (1 << 10) | (1 << 14) | (1 << 18) | (1 << 22) |
 //         (1 << 26)};
 // constexpr uint32_t scl_valid[2] = { // i2c0, i2c1
-//   (1 << 1) | (1 << 5) | (1 << 9) | (1 << 13) | (1 << 17) | (1 << 21) | (1 << 25) | (1 << 29),
-//   (1 << 3) | (1 << 7) | (1 << 11) | (1 << 15) | (1 << 19) | (1 << 23) | (1 << 27)};
+//   (1 << 1) | (1 << 5) | (1 << 9) | (1 << 13) | (1 << 17) | (1 << 21) | (1 <<
+//   25) | (1 << 29), (1 << 3) | (1 << 7) | (1 << 11) | (1 << 15) | (1 << 19) |
+//   (1 << 23) | (1 << 27)};
 
 constexpr uint16_t UART_BUFFER_SIZE = 128;
 static volatile Fifo<UART_BUFFER_SIZE> buffer_0;

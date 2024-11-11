@@ -30,26 +30,26 @@ public:
   }
 
   void clear() volatile {
-    head = 0;
-    tail = 0;
+    head    = 0;
+    tail    = 0;
     numElem = 0;
   }
 
   void push(const uint8_t b) volatile {
     if (isFull()) {
-      head = nextPos(head); // drop oldest
+      head    = nextPos(head); // drop oldest
       numElem = numElem - 1;
     }
     buffer[tail] = b;
     tail         = nextPos(tail);
-    numElem = numElem + 1;
+    numElem      = numElem + 1;
   }
 
   uint8_t pop() volatile {
     if (isEmpty()) return 0;
     uint8_t ret = buffer[head];
     head        = nextPos(head);
-    numElem = numElem - 1;
+    numElem     = numElem - 1;
     return ret;
   }
 };

@@ -29,8 +29,8 @@ class Mutex {
   mutex_t mutex;
   uint32_t timeout_ms{0};
 
-  public:
-  Mutex(uint32_t msec=0): timeout_ms(msec) { mutex_init(&mutex); }
+public:
+  Mutex(uint32_t msec = 0) : timeout_ms(msec) { mutex_init(&mutex); }
   ~Mutex() { mutex_exit(&mutex); }
 
   void set_timeout(uint32_t msec) { timeout_ms = msec; }

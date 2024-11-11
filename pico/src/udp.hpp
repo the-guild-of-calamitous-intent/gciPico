@@ -5,18 +5,18 @@
 \**************************************/
 #pragma once
 
-#include <cstring>
-#include <cstdlib>
 #include <cstdint>
+#include <cstdlib>
+#include <cstring>
 
-#include "pico/stdlib.h"
 #include "pico/cyw43_arch.h"
+#include "pico/stdlib.h"
 
 #include "lwip/pbuf.h"
 #include "lwip/udp.h"
 
 class UDP {
-  public:
+public:
   UDP() {}
   ~UDP() {
     udp_remove(udp_pcb);
@@ -33,10 +33,12 @@ class UDP {
     cyw43_arch_enable_sta_mode();
 
     printf("Connecting to Wi-Fi: %s %s\n", WIFI_SSID, WIFI_PASSWORD);
-    if (cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, 30000)) {
+    if (cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD,
+                                           CYW43_AUTH_WPA2_AES_PSK, 30000)) {
       printf("FAILED: unable to connect to %s\n", WIFI_SSID);
       return 1;
-    } else {
+    }
+    else {
       printf("SUCCESS: connected to %s\n", WIFI_SSID);
     }
 
@@ -46,14 +48,14 @@ class UDP {
     ip_addr_t addr;
     ipaddr_aton(BEACON_TARGET, &addr);
     // IP4_ADDR(&addr, 127, 0, 0, 1);
-    udp_connect(pcb,&addr,UDP_PORT);
+    udp_connect(pcb, &addr, UDP_PORT);
 
     return true;
   }
 
-  uint32_t send(uint8_* data, const uint32_t size) {
+  uint32_t send(uint8_ *data, const uint32_t size) {
     cyw43_arch_lwip_begin();
-    struct pbuf *p = pbuf_alloc(PBUF_TRANSPORT, size+1, PBUF_RAM);
+    struct pbuf *p = pbuf_alloc(PBUF_TRANSPORT, size + 1, PBUF_RAM);
     // char *req = (char *)p->payload;
     // memset(req, 0, BEACON_MSG_LEN_MAX+1);
     // snprintf(req, BEACON_MSG_LEN_MAX, "%d\n\r", counter);
@@ -68,6 +70,6 @@ class UDP {
 
   uint32_t recv() {}
 
-  protected:
-  struct udp_pcb*{nullptr};
+protected:
+  struct udp_pcb *{nullptr};
 };
