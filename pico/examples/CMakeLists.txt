@@ -1,10 +1,10 @@
 
 LIST(APPEND examples
-    adc
+    # adc
     serial
-    i2c
-    fixpt
-    pwm
+    # i2c
+    # fixpt
+    # pwm
 )
 
 message(STATUS ">> {PICO_BOARD}")

@@ -17,20 +17,19 @@ have to maintain the initialized ... or how likely is
 it that I will re-init a bus twice??
 */
 
-
 // constexpr uint I2C0_SDA_PIN    = 4;
 // constexpr uint I2C0_SCL_PIN    = 5;
 // constexpr uint I2C1_SDA_PIN    = 14;
 // constexpr uint I2C1_SCL_PIN    = 15;
 constexpr uint32_t I2C_100KHZ      = 100 * 1000UL;
 constexpr uint32_t I2C_400KHZ      = 400 * 1000UL;
-constexpr uint32_t I2C_1MHZ    = 1000 * 1000UL;
+constexpr uint32_t I2C_1MHZ        = 1000 * 1000UL;
 constexpr uint32_t I2C_BUFFER_SIZE = 32;
 
 #ifndef I2C_BUS_DEFINES
   #define I2C_BUS_DEFINES
-  constexpr bool I2C_HOLD_BUS    = true;
-  constexpr bool I2C_RELEASE_BUS = false;
+constexpr bool I2C_HOLD_BUS    = true;
+constexpr bool I2C_RELEASE_BUS = false;
 #endif
 
 // determine if the pins passed in are valid for I2C
@@ -45,7 +44,7 @@ constexpr uint32_t scl_valid[2] = { // i2c0, i2c1
     (1 << 3) | (1 << 7) | (1 << 11) | (1 << 15) | (1 << 19) | (1 << 23) |
         (1 << 27)};
 
-enum ErrorI2C:uint32_t {
+enum ErrorI2C : uint32_t {
   NONE = 0,
   INVALID_SCL_PIN,
   INVALID_SDA_PIN,
@@ -111,7 +110,6 @@ public:
     }
 
     return true;
-
   }
 
   // bool write(const uint8_t addr, const uint8_t reg, const uint8_t data) {
@@ -128,16 +126,13 @@ public:
   // }
 
   // inline size_t available() { return i2c_get_read_available(i2c); }
-
-
 };
 
 bool TwoWire::initialized0 = false;
 bool TwoWire::initialized1 = false;
 
-static
-uint32_t i2c_bus_init(const uint32_t port, const uint32_t baud, const uint32_t pin_sda,
-          const uint32_t pin_scl) {
+static uint32_t i2c_bus_init(const uint32_t port, const uint32_t baud,
+                             const uint32_t pin_sda, const uint32_t pin_scl) {
   if (port != 0 && port != 1) return INVALID_PORT;
   if (!(sda_valid[port] & (1 << pin_sda))) return INVALID_SDA_PIN;
   if (!(scl_valid[port] & (1 << pin_scl))) return INVALID_SCL_PIN;
@@ -163,8 +158,7 @@ uint32_t i2c_bus_init(const uint32_t port, const uint32_t baud, const uint32_t p
 // return: number of devices found
 //
 // https://github.com/raspberrypi/pico-examples/blob/master/i2c/bus_scan/bus_scan.c
-static
-uint8_t i2c_bus_scan(const uint32_t port, uint8_t *array, size_t size) {
+static uint8_t i2c_bus_scan(const uint32_t port, uint8_t *array, size_t size) {
   size_t index = 0;
   int ret;
   uint8_t rxdata;

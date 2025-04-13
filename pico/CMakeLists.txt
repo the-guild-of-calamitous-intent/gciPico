@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.20)
 
 set(PROJECT gcipico)
-string(TOLOWER "pico_w" PICO_BOARD) # pico or pico_w
+string(TOLOWER "pico" PICO_BOARD) # pico or pico_w
 set(PICO_SDK_PATH "$ENV{HOME}/github/pico-sdk")
 set(ENV{PATH} "$ENV{HOME}/github/gcc-arm/bin:$ENV{PATH}")
 set(PICO_SDK_PATH "${PICO_SDK_PATH}" CACHE PATH "Path to the PICO SDK")
 
-set(PICO_CXX_ENABLE_EXCEPTIONS 1)
+set(PICO_CXX_ENABLE_EXCEPTIONS 0)
 
 include(${PICO_SDK_PATH}/pico_sdk_init.cmake)
 
